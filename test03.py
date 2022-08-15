@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 pred = tf.argmax(out, axis=-1)
                 y_onehot = tf.one_hot(y, depth=10)
                 loss1 = criteon(y_onehot, out)
-                print(loss1.numpy)
+                # print(loss1.numpy)
                 loss += loss1
                 correct += float(tf.reduce_sum(tf.cast(tf.equal(pred, y), tf.float32)))
                 total += x.shape[0]

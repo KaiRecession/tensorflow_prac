@@ -19,5 +19,6 @@ if __name__ == '__main__':
         layers.Dense(10),
     ])
     # 第一层参数的计算方法：784 * 256 + 256，4就带遍一个batch的size？？？，应该是吧
+    # input第一个纬度是batch_size，就是为了利用计算机的并行计算能力
     model.build(input_shape=(4, 784))
     model.summary()

@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 
-a = zip([1, 2], [3])
+a = zip([1, 2], [3, 1])
 for (m, n) in a:
     print(m, n)
 x = []
@@ -16,6 +16,7 @@ w2 = tf.constant(2.)
 b2 = tf.constant(1.)
 optimizer = tf.keras.optimizers.SGD(learning_rate=0.1)
 ss = tf.matmul(x, w12)
+# 定义loss函数
 def f():
     y1 = tf.matmul(x, w12) + b1
     return y1
@@ -36,12 +37,13 @@ for i in range(3):
         # y2 = y1 * w2 + b2
         # y = (y1 + y2) / 2.
     # grads里面只能够放tf的变量，常量不行
-    grads = tape.gradient(y1, [w12, w12])
+    grads = tape.gradient(y1, w12)
     # grads2 = tape.gradient(y3, [w12])
     # grads2 = tf.concat([grads, grads], axis=0)
     # grads2 = tf.distribute.get_replica_context().all_reduce('sum', grads2)
     w22 = tf.concat([w1, w1], axis=0)
-    optimizer.apply_gradients((zip(grads, [w12, w12])), experimental_aggregate_gradients=False)
+    # 这个方式好原始，看上面的
+    optimizer.apply_gradients((zip(grads, w12)), experimental_aggregate_gradients=False)
     print(111)
 # dy2_dy1 = tape.gradient(y2, [y1])[0]
 # dy1_dw1 = tape.gradient(y1, [w1])[0]
